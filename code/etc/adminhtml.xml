@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * @category  Dzinehub
+ * @package   Brands
+ * @author    dZine Hub <sales@dzine-hub.com>
+ *
+ **/
+ -->
+<config>
+	<menu>
+		<catalog>
+			<children>
+				<brands module="brands" translate="title">
+					<title>Manage Brands</title>
+					<action>adminhtml/brands/index</action>
+					<sort_order>30</sort_order>
+					<depends>
+						<module>Mage_Catalog</module>
+					</depends>
+				</brands>
+			</children>
+		</catalog>
+	</menu>
+
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<catalog>
+						<children>
+							<brands module="brands">
+								<title>Manage Brands</title>
+							</brands>
+						</children>
+					</catalog>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+
+</config>
