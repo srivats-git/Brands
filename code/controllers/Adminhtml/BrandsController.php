@@ -70,10 +70,10 @@ class Dzinehub_Brands_Adminhtml_BrandsController extends Mage_Adminhtml_Controll
         {
             try
             {
-                 $postData=$this->getRequest()->getPost();
+                $postData=$this->getRequest()->getPost();
                 $bannerModel=Mage::getModel('brands/brands');
                 $bannerModel->setBrandId($this->getRequest()->getParam('brand_id'));
-               $bannerModel->setStoreId($this->getRequest()->getPost('store_id',array(0)));
+                $bannerModel->setStoreId($this->getRequest()->getPost('store_id',array(0)));
                 $bannerModel->setData($postData)->save();
                 Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('brands')->__("Brand was successfully saved"));
                 Mage::getSingleton('adminhtml/session')->setData(false);
