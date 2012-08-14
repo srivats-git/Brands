@@ -32,17 +32,14 @@ class Dzinehub_Brands_Adminhtml_BrandsController extends Mage_Adminhtml_Controll
 
 	public function editAction()
 	{
-		$brandId=$this->getRequest()->getParam('brand_id');
+
+		$brandId=$this->getRequest()->getParam('id');
 		$brandsModel=Mage::getModel('brands/brands')->load($brandId);
-        var_dump($this->getRequest()->getParams());
-       // Mage::log($this->getRequest()->getParam('brand_id'));
-		if( $brandsModel->getBrandId() || $brandId==0)
+
+		if( $brandId==0 || $brandsModel->getId())
 		{
-
-			Mage::register('brands_data',$brandsModel);
+ 			Mage::register('brands_data',$brandsModel);
             $brands=Mage::registry('brands_data');
-            //var_dump($brands->getBrandId());
-
 			$this->loadLayout();
 			$this->_setActiveMenu('brands/brands');
 			$this->_addBreadCrumb(Mage::helper('brands')->__('Manage Brands'),Mage::helper('brands')->__('Manage Brands'));
@@ -54,7 +51,6 @@ class Dzinehub_Brands_Adminhtml_BrandsController extends Mage_Adminhtml_Controll
     		->_addLeft(
     			$this->getLayout()->createBlock('brands/adminhtml_brands_edit_tabs')
     		);
-
 			$this->renderLayout();
 		}
 		else
@@ -62,6 +58,7 @@ class Dzinehub_Brands_Adminhtml_BrandsController extends Mage_Adminhtml_Controll
 			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('brands')->__('Brand does not exist'));
 			$this->_redirect('*/*/');
 		}
+
 	}
 
     public function saveAction()
@@ -72,7 +69,7 @@ class Dzinehub_Brands_Adminhtml_BrandsController extends Mage_Adminhtml_Controll
             {
                 $postData=$this->getRequest()->getPost();
                 $bannerModel=Mage::getModel('brands/brands');
-                $bannerModel->setBrandId($this->getRequest()->getParam('brand_id'));
+                $bannerModel->setId($this->getRequest()->getParam('id'));
                 $bannerModel->setStoreId($this->getRequest()->getPost('store_id',array(0)));
                 $bannerModel->setData($postData)->save();
                 Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('brands')->__("Brand was successfully saved"));
@@ -83,7 +80,7 @@ class Dzinehub_Brands_Adminhtml_BrandsController extends Mage_Adminhtml_Controll
             catch(Exception $e)
             {
                 Mage::getSingleton('adminhtml/session')->addError(Mage::helper('brands')->__("Failed to save"));
-                $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('brand_id')));
+                $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
                 return;
             }
         }
